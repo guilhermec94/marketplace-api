@@ -4,15 +4,23 @@ import (
 	"context"
 	"errors"
 	"log"
+	"marketplace-api/database"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	// setup database
+	_, err := database.NewDatabase()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	router := gin.Default()
 
 	srv := &http.Server{
